@@ -1,0 +1,432 @@
+<!doctype html>
+<html lang="en" data-bs-theme="auto">
+  <head><script src="assets/js/color-modes.js"></script>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.122.0">
+    <title>Sidebar</title>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/album/">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
+
+<link href="assets/dist/css/bootstrap.min.css" rel="stylesheet">
+<link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+  />
+  <link rel="stylesheet" href="https://cdn.hugeicons.com/font/hgi-stroke-rounded.css" />
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+
+      .b-example-divider {
+        width: 100%;
+        height: 3rem;
+        background-color: rgba(0, 0, 0, .1);
+        border: solid rgba(0, 0, 0, .15);
+        border-width: 1px 0;
+        box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
+      }
+
+      .b-example-vr {
+        flex-shrink: 0;
+        width: 1.5rem;
+        height: 100vh;
+      }
+
+      .bi {
+        vertical-align: -.125em;
+        fill: currentColor;
+      }
+
+      .nav-scroller {
+        position: relative;
+        z-index: 2;
+        height: 2.75rem;
+        overflow-y: hidden;
+      }
+
+      .nav-scroller .nav {
+        display: flex;
+        flex-wrap: nowrap;
+        padding-bottom: 1rem;
+        margin-top: -1px;
+        overflow-x: auto;
+        text-align: center;
+        white-space: nowrap;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      .btn-bd-primary {
+        --bd-violet-bg: #712cf9;
+        --bd-violet-rgb: 112.520718, 44.062154, 249.437846;
+
+        --bs-btn-font-weight: 600;
+        --bs-btn-color: var(--bs-white);
+        --bs-btn-bg: var(--bd-violet-bg);
+        --bs-btn-border-color: var(--bd-violet-bg);
+        --bs-btn-hover-color: var(--bs-white);
+        --bs-btn-hover-bg: #6528e0;
+        --bs-btn-hover-border-color: #6528e0;
+        --bs-btn-focus-shadow-rgb: var(--bd-violet-rgb);
+        --bs-btn-active-color: var(--bs-btn-hover-color);
+        --bs-btn-active-bg: #5a23c8;
+        --bs-btn-active-border-color: #5a23c8;
+      }
+
+      .bd-mode-toggle {
+        z-index: 1500;
+      }
+
+      .bd-mode-toggle .dropdown-menu .active .bi {
+        display: block !important;
+      }
+    </style>
+
+<style>
+  /* CUSTOM */
+  a {
+    --bs-link-color-rgb: 0, 175, 137;
+    --bs-link-hover-color-rgb: 0, 175, 137;
+  }
+  .btn-bd-primary{
+    --bs-btn-bg: #00FFC8;
+    --bs-btn-color:black;
+    --bs-btn-hover-color:black;
+    --bs-btn-border-color:#007E63;
+    --bs-btn-hover-bg:#50f8d4;
+    --bs-btn-hover-border-color:#007E63;
+    --bs-btn-active-bg:#50f8d4;
+    
+  }
+  body{
+    background-image: url('bg.jpg');
+    background-size: 100% 100%;
+  }
+  a{
+    text-decoration: none;
+  }
+  main{
+    z-index: 2;
+    position: relative;
+  }
+  .cursor-pointer{
+    cursor: pointer;
+  }
+  .opcion-seleccionada{
+    background-color: rgb(255, 255, 255,0.1) !important;
+    color: white !important;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px); 
+  }
+  .opcion-no-seleccionada:hover{
+    padding-left: 0.75rem;
+    background-color: rgb(255, 255, 255,0.1) !important;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px); 
+  }
+  .close{
+    cursor: pointer;
+  }
+  
+</style>
+
+<style>
+  /* Start Sidebar activo */
+  .sidebarOn {
+    animation: slideOutRight; /* referring directly to the animation's @keyframe declaration */
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+    transform-origin: center center;
+    pointer-events: none;
+  }
+  .capa-anterior-active{
+    background-color: rgb(255, 255, 255,0.4);
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    border-radius: 32px;
+    animation: capaAnteriorActive;
+    animation-duration: 0.1s;
+    animation-fill-mode: forwards;
+    transform-origin: center center;
+
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px); 
+    pointer-events: none;
+
+  }
+  .opcion-no-seleccionada{
+    padding-left: 0;
+    border: 0;
+    transition: padding-left 0.2s ease;
+    color: white !important;
+  }  
+  .header-active{
+    animation: 
+    backInDown 1s ease-out forwards;
+  }
+  .animate__fadeInLeft{
+    opacity: 1 !important;
+    animation: fadeInLeft;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+  }
+  .footer-sidebar-active{
+    animation: fadeInUpBig;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+    
+  }
+  @keyframes slideOutRight {
+    0% {
+        -webkit-transform: translateZ(0);
+        transform: translateZ(0);
+    }
+    100% {
+        -webkit-transform: translate3d(100%, 0, 0);
+        transform: translate3d(70%, 5%, 0) scale(0.7);
+        border-radius: 32px;
+    }
+  }
+  @keyframes capaAnteriorActive {
+    0% {
+        -webkit-transform: translateZ(0);
+        transform: translateZ(0);
+    }
+    100% {
+        -webkit-transform: translate3d(100%, 0, 0);
+        transform: translate3d(60%, 5%, 0) scale(0.6);
+    }
+  }
+  @keyframes fadeInLeft {
+    0% {
+        -webkit-transform: translate3d(-100%, 0, 0);
+        transform: translate3d(-100%, 0, 0);
+    }
+
+    100% {
+        -webkit-transform: translateZ(0);
+        transform: translateZ(0);
+    }
+  }
+  /* End Sidebar activo */
+</style>
+
+<style>
+  /* Start Sidebar close */
+  
+  /* End Sidebar close */
+</style>
+
+  </head>
+  <body class="bg-primary overflow-hidden vw-100 vh-100 vw-100">
+
+  <section class="position-fixed vw-100 vh-100">
+    <header class="pt-4">
+      <div class="navbar p-0">
+        <div class="container">
+          <div class="col-2 col-md-1 ">
+            <img class="rounded-pill profile-sidebar img-fluid w-40 border border-white" src="https://www.mosquedacordova.com/yo.webp" alt="Card image cap">
+          </div>
+
+          <div class="close py-5 cerrar-sidebar">
+            <img src="close.svg" alt="close" class="img-fluid close-sidebar" width="28px">
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <section class="container menu-sidebar mt-3 mt-md-5">
+      <div class="row">
+        <div class="col-12">
+          <h1 class="display-4 fw-bold text-white mb-4 opacity-50">Filtro</h1>
+          <div class="d-flex flex-column col-6 col-md-3 gap-2">
+            <button type="button" class="btn btn-outline-light d-flex gap-3 align-items-center opcion-no-seleccionada fs-3">
+              <i class="hgi hgi-stroke hgi-computer-video-call fs-3"></i>
+              Electrónica
+            </button>
+            <button type="button" class="btn btn-outline-light d-flex gap-3 align-items-center opcion-no-seleccionada fs-3">
+              <i class="hgi hgi-stroke hgi-car-03 fs-3"></i>
+              Vehículos
+            </button>
+            <button type="button" class="btn btn-outline-light d-flex gap-3 align-items-center opcion-no-seleccionada fs-3">
+              <i class="hgi hgi-stroke hgi-sofa-01 fs-3"></i>
+              Muebles
+            </button>
+            <button type="button" class="btn btn-outline-light d-flex gap-3 align-items-center opcion-no-seleccionada fs-3">
+              <i class="hgi hgi-stroke hgi-microwave fs-3"></i>
+              Hogar
+            </button>
+            <button type="button" class="btn btn-outline-light d-flex gap-3 align-items-center opcion-seleccionada fs-3">
+              <i class="hgi hgi-stroke hgi-house-04 fs-3"></i>
+              Inmuebles
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="container footer-sidebar">
+      <div class="col-6 col-md-3 mt-5">
+        <button type="button" class="btn btn-bd-primary fs-3 rounded-pill w-100 ">
+          Filtrar
+        </button>
+        <div class="text-center mt-3 text-white">
+          <small>By</small> <a href="https://www.mosquedacordova.com/"><small>Isaac Mosqueda</small></a>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <main class="bg-white overflow-auto shadow vh-100  ">
+
+    <header>
+      <div class="navbar p-0">
+        <div class="container">
+          <div class="col-2 col-md-1 d-none">
+            <img class="rounded-pill img-fluid w-40 border border-white" src="https://www.mosquedacordova.com/yo.webp" alt="Card image cap">
+          </div>
+          <div class="bpx-2 cursor-pointer abrir-sidebar py-5">
+            <i class="hgi hgi-stroke hgi-menu-02 fs-2 text-secondary"></i>
+          </div>
+
+          <div class="bpx-2 py-5">
+            <i class="hgi hgi-stroke hgi-user-circle-02 fs-2 text-secondary"></i>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <section class="container mb-5">
+      <div class="row">
+        <div class="col-12">
+          <h1 class="display-4 fw-bold text-secondary mb-4">Marketplace</h1>
+
+          <div class="input-group">
+            <input type="text" 
+            class="form-control bg-body-tertiary rounded-pill py-3 px-4" 
+            placeholder="Ingresa otra palabra clave. . ." aria-label="Username" aria-describedby="basic-addon1">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="container">
+
+      <div class="row row-cols-2 row-cols-md-3 g-2 mb-5">
+        <div class="col">
+          <div class="card border-0">
+            <img src="1.jpg" class="card-img-top rounded" alt="...">
+            <div class="card-body px-0 pt-2">
+              <p class="mb-0">
+                <span class="fw-bold">$10,000</span> • Villa Avalon 
+              </p>
+              <small class="text-body-secondary">7 habitaciones · 9 camas · 9.5 b...</small>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card border-0">
+            <img src="2.jpg" class="card-img-top rounded" alt="...">
+            <div class="card-body px-0 pt-2">
+              <p class="mb-0">
+                <span class="fw-bold">$8,384</span> • Casa LaVista
+              </p>
+              <small class="text-body-secondary">7 habitaciones · 9 camas · 9.5 b...</small>
+            </div>
+          </div>
+        </div>
+
+        <div class="col">
+          <div class="card border-0">
+            <img src="3.jpg" class="card-img-top rounded" alt="...">
+            <div class="card-body px-0 pt-2">
+              <p class="mb-0">
+                <span class="fw-bold">$13,000</span> • Villa Avalon 3
+              </p>
+              <small class="text-body-secondary">3 habitaciones · 6 camas · 3 ba...</small>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card border-0">
+            <img src="4.jpg" class="card-img-top rounded" alt="...">
+            <div class="card-body px-0 pt-2">
+              <p class="mb-0">
+                <span class="fw-bold">$6,000</span> • Villa en Lance...
+              </p>
+              <small class="text-body-secondary">7 habitaciones · 9 camas · 9.5 b...</small>
+            </div>
+          </div>
+        </div>
+
+        <div class="col">
+          <div class="card border-0">
+            <img src="5.jpg" class="card-img-top rounded" alt="...">
+            <div class="card-body px-0 pt-2">
+              <p class="mb-0">
+                <span class="fw-bold">$17,000</span> • Bogotá Luxe
+              </p>
+              <small class="text-body-secondary">7 habitaciones · 9 camas · 9.5 b...</small>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card border-0">
+            <img src="6.jpg" class="card-img-top rounded" alt="...">
+            <div class="card-body px-0 pt-2">
+              <p class="mb-0">
+                <span class="fw-bold">$12,000</span> • Rof en Carreon...
+              </p>
+              <small class="text-body-secondary">7 habitaciones · 9 camas · 9.5 b...</small>
+            </div>
+          </div>
+        </div>
+
+
+
+      </div>
+    </div>
+
+    <footer class="mt-auto container text-secondary text-center pb-5">
+      <p>Una idea de <a href="https://www.mosquedacordova.com/">Isaac Mosqueda</a></p>
+    </footer>
+    
+  </main>
+  <div class="capa-anterior"></div>
+
+<script src="assets/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  document.querySelector('.abrir-sidebar').addEventListener('click', function() {
+    document.querySelector('main').classList.add('sidebarOn');
+    document.querySelector('.capa-anterior').classList.add('capa-anterior-active');
+    document.querySelector('.profile-sidebar').classList.add('header-active');
+    document.querySelector('.close-sidebar').classList.add('header-active');
+    document.querySelector('.menu-sidebar').classList.add('animate__fadeInLeft');
+    document.querySelector('.footer-sidebar').classList.add('footer-sidebar-active');
+    
+  });
+
+</script>
+
+  </body>
+</html>
